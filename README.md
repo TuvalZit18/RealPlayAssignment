@@ -51,6 +51,12 @@ On success:
 - Show a toast.
 - Include the persisted attribution params in the `POST /register` payload, then clear them.
 
+## Architecture
+
+Design decisions, specs and the reasoning behind them live in [docs/architecture/](docs/architecture/README.md). Start with the index there.
+
+Before writing code, I chose the architecture by running my own architecture-advisor skill, answered every decision cluster by cluster, and planned the git workflow. The full record is in [docs/architecture/architecture-decisions.md](docs/architecture/architecture-decisions.md).
+
 ## Getting Started
 
 _To be added once the project is scaffolded._
