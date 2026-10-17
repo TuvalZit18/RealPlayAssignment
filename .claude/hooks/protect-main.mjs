@@ -34,8 +34,23 @@ function currentBranch(cwd) {
 // One git invocation = "git" up to the next shell separator.
 const gitSegments = command.match(/\bgit\b[^;&|\n]*/g) ?? [];
 
-const writesOnBranch = /\b(commit|merge|rebase|cherry-pick|revert|am|push)\b/;
-const pushesToMain = new RegExp(`\\bpush\\b.*(\\s|:|\\+)${PROTECTED}(\\s|$)`);
+// Subcommands that change the current branch or the remote.
+const WRITE_SUBCOMMANDS = new Set(['commit', 'merge', 'rebase', 'cherry-pick', 'revert', 'am', 'push']);
+// Global options that take a separate value, e.g. `git -C <path> commit`.
+const OPTIONS_WITH_VALUE = new Set(['-C', '-c', '--git-dir', '--work-tree', '--namespace']);
+
+// Returns the subcommand (e.g. "merge-base", not "merge") and its arguments.
+function parseGit(segment) {
+  const tokens = segment.trim().split(/\s+/).slice(1);
+  let i = 0;
+  while (i < tokens.length && tokens[i].startsWith('-')) {
+    i += OPTIONS_WITH_VALUE.has(tokens[i]) ? 2 : 1;
+  }
+  return { subcommand: tokens[i] ?? '', args: tokens.slice(i + 1) };
+}
+
+// main, HEAD:main, +main, refs/heads/main (quotes stripped).
+const targetsMain = (arg) => new RegExp(`(^|[:+/])${PROTECTED}$`).test(arg.replace(/['"]/g, ''));
 
 function block(reason) {
   process.stderr.write(
@@ -45,16 +60,18 @@ function block(reason) {
   process.exit(2);
 }
 
-for (const segment of gitSegments) {
-  if (pushesToMain.test(segment)) {
-    block(`"${segment.trim()}" pushes to ${PROTECTED}.`);
+const invocations = gitSegments.map((segment) => ({ segment: segment.trim(), ...parseGit(segment) }));
+
+for (const { segment, subcommand, args } of invocations) {
+  if (subcommand === 'push' && args.some(targetsMain)) {
+    block(`"${segment}" pushes to ${PROTECTED}.`);
   }
 }
 
 if (currentBranch(input?.cwd) === PROTECTED) {
-  const offending = gitSegments.find((s) => writesOnBranch.test(s));
+  const offending = invocations.find(({ subcommand }) => WRITE_SUBCOMMANDS.has(subcommand));
   if (offending) {
-    block(`"${offending.trim()}" would change ${PROTECTED}, and the current branch is ${PROTECTED}.`);
+    block(`"${offending.segment}" would change ${PROTECTED}, and the current branch is ${PROTECTED}.`);
   }
 }
 
