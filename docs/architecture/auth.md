@@ -27,7 +27,10 @@ const selectIsAuthenticated = (s: RootState) => s.auth.session !== null;
 | Action | Effect |
 | --- | --- |
 | `sessionStarted` | Sets the session |
+| `sessionEnded` | Sign out: clears the session only (attribution's `registered` flag stays) |
 | `sessionHydrated` | Replaces the session with what another tab wrote |
+
+Stored under `rp.session` as `{ v: 1, session }`; a session with a missing token or an empty user field is discarded.
 
 ## Authorization
 
@@ -42,10 +45,10 @@ All checks go through `selectIsAuthenticated`. No page or modal component checks
 
 | Gate | Where | Condition | Action |
 | --- | --- | --- | --- |
-| Modal gate | `AppLayout`, wraps every route | Signed out and the URL has at least one valid modal param | Redirect to `/register?returnTo=…` |
-| `<ProtectedRoute>` | Around `/account` | Signed out | Redirect to `/register?returnTo=…` |
+| Modal gate | `AppLayout` (`useModalGateRedirect`), wraps every route | Signed out and the URL has at least one valid modal param | Renders `<Navigate>` to `/register?returnTo=…` instead of the page, so the page never flashes |
+| `<ProtectedRoute>` | Layout route around `/account` | Signed out | Redirect to `/register?returnTo=…` |
 
-Both redirects use `replace`, so Back does not bounce the user into the redirect again.
+Both redirects use `replace`, so Back does not bounce the user into the redirect again. `AppLayout` also mounts `<ModalRenderer/>` only for signed-in users (it isn't imported by `features/auth`, which avoids a circular import).
 
 Attribution is captured before either gate can run (see [attribution.md](attribution.md)), so a redirect never loses campaign params.
 
@@ -62,8 +65,22 @@ The destination the user wanted is carried through registration in the URL.
 Rules:
 
 - `returnTo` is validated before use: it must be a same-origin path. Anything else becomes `/`. See [security.md](security.md).
-- Missing `returnTo` means `/`.
+- Missing `returnTo` means `/`, so a redirect whose destination is `/` leaves the param out.
+- Any existing `returnTo` param is dropped when building a new one.
 - If the user is already on `/register` with modal params, `returnTo` is `/` plus those modal params, so the user doesn't loop back to the form.
+
+Helpers live in `features/auth/returnTo.ts`: `safeReturnTo`, `buildReturnTo`, `registerRedirectFor`.
+
+## Header and signing out
+
+- **Signed out:** the header shows "Sign up".
+- **Signed in:** the header shows the user's initial and name; its menu has "Account" and "Sign out". On phones, "Sign out (name)" is in the main menu.
+- **Sign out** first navigates to `/`, waits for the navigation to finish, then ends the session. Ending it while still on `/account` would make `<ProtectedRoute>` redirect to `/register` instead.
+- `/register` for a signed-in user shows "You're already registered" with links to the account and home.
+
+## Reset demo (reviewer helper)
+
+The "Try it" panel on the home page has a **Reset demo** button (`app/useResetDemo.ts`). It removes `rp.session` and `rp.attribution` (keeping `rp.theme`), resets both slices and goes to `/`. The visitor is brand new again, so first-touch capture and the signed-out redirects can be re-tested. Other tabs follow through the `storage` event.
 
 ## Alternatives considered
 
@@ -73,6 +90,6 @@ Rules:
 - **React Router loaders for redirects:** split auth logic between loaders and components.
 - **`returnTo` in `sessionStorage`:** a cleaner URL, but hidden state that is lost in a new tab.
 
-## Open questions
+## Decision: Sign out and Reset demo
 
-- Add a "Sign out" control so reviewers can re-test the signed-out flow without clearing storage by hand? Signing out would clear the session only; the `registered` flag on attribution would stay.
+The task has no sign-out. Without one, a reviewer who registers once can't see the signed-out redirect again, and the `registered` flag stops attribution capture. Decided in Stage 7: add both **Sign out** (header) and **Reset demo** (Try it panel). Alternative considered: neither, and clear storage in DevTools.

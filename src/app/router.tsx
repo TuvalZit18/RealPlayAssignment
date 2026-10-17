@@ -1,4 +1,5 @@
 import type { RouteObject } from 'react-router';
+import { ProtectedRoute } from '../features/auth';
 import { AccountPage } from '../pages/AccountPage';
 import { HomePage } from '../pages/HomePage';
 import { NotFoundPage } from '../pages/NotFoundPage';
@@ -12,7 +13,7 @@ export const routes: RouteObject[] = [
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/register', element: <RegisterPage /> },
-      { path: '/account', element: <AccountPage /> },
+      { element: <ProtectedRoute />, children: [{ path: '/account', element: <AccountPage /> }] },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

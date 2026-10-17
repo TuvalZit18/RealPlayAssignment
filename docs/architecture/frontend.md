@@ -39,7 +39,9 @@ src/
     hooks.ts              Typed useAppDispatch / useAppSelector
     router.tsx            createBrowserRouter, route tree
     providers.tsx         Redux, React Query, MUI theme, toast
-    AppLayout.tsx         Header/nav, <Outlet/>, modal gate, <ModalRenderer/>
+    AppLayout.tsx         <Outlet/>, modal gate, <ModalRenderer/> (signed in only)
+    AppHeader.tsx         Logo, nav, theme toggle, Sign up or user menu with Sign out
+    useResetDemo.ts       Reviewer helper: forget session and attribution
     ThemeToggle.tsx       Dark/light switch in the header
     theme/                createAppTheme, ThemeModeProvider, useThemeMode
   features/
