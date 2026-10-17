@@ -36,6 +36,7 @@ src/
   app/
     main.tsx              Bootstrap (see below)
     store.ts              configureStore, listener middleware, cross-tab sync
+    hooks.ts              Typed useAppDispatch / useAppSelector
     router.tsx            createBrowserRouter, route tree
     providers.tsx         Redux, React Query, MUI theme, toast
     AppLayout.tsx         Header/nav, <Outlet/>, modal gate, <ModalRenderer/>

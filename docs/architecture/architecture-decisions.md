@@ -113,6 +113,6 @@ Decided before writing code:
 
 Decisions deferred until implementation, tracked in [README.md](README.md#open-questions):
 
-1. Whether attribution older than 30 days is still sent on registration when no newer params arrived.
+1. ~~Whether attribution older than 30 days is still sent on registration when no newer params arrived.~~ Decided in Stage 5: **sent as-is**, following the spec literally (options: send it · drop it at registration · expire on app load).
 2. Whether to add a "Sign out" control for re-testing the signed-out flow.
 3. How the toast is implemented.

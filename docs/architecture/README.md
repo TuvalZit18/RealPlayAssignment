@@ -91,6 +91,6 @@ Deliberately out of scope: backups, file storage, scaling, messaging, background
 
 Decisions not yet made. Each is repeated in the doc it affects.
 
-1. Should attribution older than 30 days still be sent on registration if no new params arrived? ([attribution.md](attribution.md))
+1. ~~Should attribution older than 30 days still be sent on registration if no new params arrived?~~ **Decided: yes, sent as-is** ([attribution.md](attribution.md#decision-records-dont-expire-on-their-own)).
 2. Should there be a "Sign out" control so reviewers can re-test the signed-out flow? ([auth.md](auth.md))
 3. How is the toast implemented: MUI `Snackbar` behind a small helper, or `notistack`? ([frontend.md](frontend.md))
