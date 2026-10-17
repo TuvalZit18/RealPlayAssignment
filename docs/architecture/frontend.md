@@ -9,7 +9,7 @@ Status: approved · Related: [routing-and-modals.md](routing-and-modals.md), [at
 | Framework | React 18 + TypeScript (strict) | Required by the task |
 | Build | Vite | Required by the task; static SPA, no server rendering needed |
 | Rendering | Client-side only | No SEO need; everything after the home page is behind sign-up |
-| UI | MUI | `Dialog`, `Snackbar`, `TextField` cover modals, toast and form out of the box |
+| UI | MUI, `@mui/icons-material`, Inter | `Dialog`, `Snackbar`, `TextField` cover modals, toast and form out of the box. Design in [ui.md](ui.md) |
 | Routing | React Router 7, data router (`createBrowserRouter`) | `router.subscribe()` is needed for attribution capture outside React. Pinned to v7 because v8 requires React 19 |
 | Client state | Redux Toolkit | Holds `auth` and `attribution`; chosen to show RTK patterns (slices, listener middleware) |
 | Server state | React Query | Required by the task; owns the register mutation only |
@@ -39,6 +39,8 @@ src/
     router.tsx            createBrowserRouter, route tree
     providers.tsx         Redux, React Query, MUI theme, toast
     AppLayout.tsx         Header/nav, <Outlet/>, modal gate, <ModalRenderer/>
+    ThemeToggle.tsx       Dark/light switch in the header
+    theme/                createAppTheme, ThemeModeProvider, useThemeMode
   features/
     attribution/          Slice, capture function, constants, selectors
     auth/                 Slice, selectors, <ProtectedRoute>, returnTo helpers
@@ -52,6 +54,7 @@ src/
   shared/
     api/                  fetch wrapper, ApiError
     storage/              Versioned, failure-safe localStorage read/write
+    ui/                   Logo, ModalFrame, brand colour
   mocks/
     handlers.ts           MSW handlers (shared by browser and tests)
     browser.ts            setupWorker for dev
