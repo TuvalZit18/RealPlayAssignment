@@ -17,11 +17,21 @@ interface ModalFrameProps {
   /** Label of the single primary action. Defaults to "Got it", which closes the modal. */
   actionLabel?: string;
   onAction?: () => void;
+  /** Hide the dimmed backdrop, e.g. for modals stacked on top of another one. */
+  hideBackdrop?: boolean;
 }
 
 // Shared look for every modal: title, close (X), body, one primary action.
 // Full-screen on phones. See docs/architecture/ui.md.
-export function ModalFrame({ open, title, onClose, children, actionLabel = 'Got it', onAction }: ModalFrameProps) {
+export function ModalFrame({
+  open,
+  title,
+  onClose,
+  children,
+  actionLabel = 'Got it',
+  onAction,
+  hideBackdrop = false,
+}: ModalFrameProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const titleId = useId();
@@ -33,6 +43,7 @@ export function ModalFrame({ open, title, onClose, children, actionLabel = 'Got 
       fullScreen={fullScreen}
       fullWidth
       maxWidth="xs"
+      hideBackdrop={hideBackdrop}
       aria-labelledby={titleId}
     >
       <DialogTitle id={titleId} sx={{ pr: 7, fontWeight: 650 }}>

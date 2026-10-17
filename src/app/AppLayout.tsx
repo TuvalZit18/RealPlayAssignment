@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
 import { Link as RouterLink, NavLink, Outlet } from 'react-router';
+import { ModalRenderer } from '../features/modals';
 import { Logo } from '../shared/ui';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -17,8 +18,8 @@ const NAV_LINKS = [
   { to: '/account', label: 'Account', end: false },
 ] as const;
 
-// Header, navigation and the page outlet. The modal gate and <ModalRenderer/>
-// are added here in later stages; the signed-in state of the header in Stage 7.
+// Header, navigation, the page outlet and the single global <ModalRenderer/>.
+// The modal gate and the signed-in state of the header are added in Stage 7.
 export function AppLayout() {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const closeMenu = () => setMenuAnchor(null);
@@ -87,6 +88,8 @@ export function AppLayout() {
           <Outlet />
         </Container>
       </Box>
+
+      <ModalRenderer />
     </Box>
   );
 }

@@ -65,8 +65,20 @@ closeModal('promo');                                         // removes only ?pr
 ## Rendering
 
 - `parseModals(searchParams)` returns the ordered, validated list of open modals. It is a pure function and unit-tested.
-- `<ModalRenderer/>` maps that list to MUI `Dialog`s through the registry.
+- `<ModalRenderer/>` maps that list to the modal components, each built on the shared `ModalFrame` (see [ui.md](ui.md#modals)).
+- **Stacking:** every open modal is rendered; later ones sit on top. Only the bottom modal dims the page (`hideBackdrop` on the rest), so a stack doesn't get darker with each modal. MUI marks lower modals `aria-hidden`, so assistive tech only sees the top one.
 - The renderer returns nothing for signed-out users. The modal gate (see [auth.md](auth.md)) redirects them before they would see anything.
+
+| Modal | Title | Content | Action |
+| --- | --- | --- | --- |
+| `welcome` | Welcome to RealPlay | Account ready, enjoy the welcome bonus | Let's go |
+| `promo` | Promo unlocked | Shows the promo code | Got it |
+| `invite` | You've been invited | Shows the friend ID | Got it |
+| `signup` | Registration | Already registered and signed in | Got it |
+
+Every action and the ✕ call `closeModal` for that modal.
+
+Files: `features/modals/modalRegistry.ts` (params and validation), `parseModals.ts`, `useModalStack.ts`, `ModalContents.tsx` (the four modals), `ModalRenderer.tsx`.
 
 ## `?signup=1` for signed-in users
 
