@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http } from 'msw/http';
 import { FAILING_EMAIL } from '../../mocks/handlers';
@@ -88,6 +88,24 @@ describe('registration end to end', () => {
     await fillAndSubmit('Dana', 'dana@example.com');
 
     expect(await screen.findByRole('alert')).toHaveTextContent('An account with this email already exists.');
+  });
+
+  it('allows the same email again after Reset demo, without a reload', async () => {
+    const user = userEvent.setup();
+    const { router, store } = renderRoute('/register');
+
+    await fillAndSubmit('Dana', 'dana@example.com');
+    await screen.findByRole('heading', { level: 1, name: 'Play for real.' });
+
+    await user.click(screen.getByRole('button', { name: 'Reset demo' }));
+    expect(store.getState().auth.session).toBeNull();
+
+    await act(() => router.navigate('/register'));
+    await fillAndSubmit('Dana', 'dana@example.com');
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Play for real.' })).toBeInTheDocument();
+    expect(store.getState().auth.session?.user.email).toBe('dana@example.com');
+    expect(screen.queryByText('An account with this email already exists.')).not.toBeInTheDocument();
   });
 
   it('validates on the client and sends nothing when invalid', async () => {

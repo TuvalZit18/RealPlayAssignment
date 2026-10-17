@@ -11,7 +11,7 @@ Requires Node 24 (see `.nvmrc`).
 ```bash
 npm ci          # install exact dependency versions
 npm run dev     # start the app at http://localhost:5173
-npm test        # run the test suite once (124 tests)
+npm test        # run the test suite once (125 tests)
 ```
 
 There is no backend: the API is mocked in the browser with [MSW](https://mswjs.io/), so `npm run dev` is all you need.
@@ -71,7 +71,7 @@ Full layout and state ownership: [frontend.md](docs/architecture/frontend.md).
 
 ## Tests
 
-124 tests across 18 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
+125 tests across 18 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
 
 ## How I worked
 
@@ -86,7 +86,7 @@ Accepted for a take-home with a mocked backend:
 
 - The session token lives in `localStorage`; in production it would be an httpOnly cookie set by the server.
 - "Signed in" is enforced only on the client.
-- The mock "database" of registered emails resets on page reload.
+- The mock "database" of registered emails lives in memory; it resets on page reload and on Reset demo.
 - A toast shown while a modal is open is visible but not announced by screen readers (MUI hides content behind a modal).
 
 ## Scripts

@@ -4,6 +4,7 @@
 import { delay } from 'msw';
 import { http, HttpResponse } from 'msw/http';
 import { API_BASE_URL } from '../shared/api';
+import { DEMO_RESET_EVENT } from '../shared/demoReset';
 
 // Hard-coded on purpose: lets reviewers see the error path and confirm that
 // attribution survives a failed registration.
@@ -12,12 +13,14 @@ export const FAILING_EMAIL = 'fail@example.com';
 const RESPONSE_DELAY_MS = import.meta.env.MODE === 'test' ? 0 : 600;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// "Database" of registered emails. Resets on every page load.
+// "Database" of registered emails. Resets on every page load and on "Reset demo".
 const registeredEmails = new Set<string>();
 
 export function resetMockDb(): void {
   registeredEmails.clear();
 }
+
+window.addEventListener(DEMO_RESET_EVENT, resetMockDb);
 
 function errorResponse(status: number, code: string, message: string, fields?: Record<string, string>) {
   return HttpResponse.json({ error: { code, message, ...(fields && { fields }) } }, { status });

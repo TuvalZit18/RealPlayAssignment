@@ -33,7 +33,7 @@ MSW 3 notes: handlers import `http` and `HttpResponse` from `msw/http`, `delay` 
 4. If the email was already registered since the page loaded → `409`.
 5. Otherwise store the email in an in-memory set and return `201` with `{ user: { id, name, email }, token }`. `id` and `token` are random strings.
 
-The in-memory set resets on every page reload. That is acceptable for a demo; the session itself lives in `localStorage` on the client.
+The in-memory set resets on every page reload, and when the app fires the `realplay:demo-reset` window event (the **Reset demo** button; see [auth.md](auth.md#reset-demo-reviewer-helper)). That is acceptable for a demo; the session itself lives in `localStorage` on the client.
 
 ## Dev helper
 
