@@ -59,4 +59,20 @@ Before writing code, I chose the architecture by running my own architecture-adv
 
 ## Getting Started
 
-_To be added once the project is scaffolded._
+Requires Node 24 (see `.nvmrc`).
+
+```bash
+npm ci          # install exact dependency versions
+npm run dev     # start the app at http://localhost:5173
+npm test        # run the test suite once
+```
+
+| Script | Does |
+| --- | --- |
+| `npm run dev` | Vite dev server |
+| `npm run build` | Type-check and production build |
+| `npm run preview` | Serve the production build locally |
+| `npm run typecheck` | TypeScript check, no output |
+| `npm run lint` | ESLint |
+| `npm test` | Vitest, single run |
+| `npm run test:watch` | Vitest, watch mode |

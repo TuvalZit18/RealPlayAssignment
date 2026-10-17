@@ -10,7 +10,7 @@ Status: approved · Related: [routing-and-modals.md](routing-and-modals.md), [at
 | Build | Vite | Required by the task; static SPA, no server rendering needed |
 | Rendering | Client-side only | No SEO need; everything after the home page is behind sign-up |
 | UI | MUI | `Dialog`, `Snackbar`, `TextField` cover modals, toast and form out of the box |
-| Routing | React Router, data router (`createBrowserRouter`) | `router.subscribe()` is needed for attribution capture outside React |
+| Routing | React Router 7, data router (`createBrowserRouter`) | `router.subscribe()` is needed for attribution capture outside React. Pinned to v7 because v8 requires React 19 |
 | Client state | Redux Toolkit | Holds `auth` and `attribution`; chosen to show RTK patterns (slices, listener middleware) |
 | Server state | React Query | Required by the task; owns the register mutation only |
 | Mock API | MSW | See [backend.md](backend.md) |
