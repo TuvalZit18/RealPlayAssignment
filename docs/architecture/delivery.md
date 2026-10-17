@@ -9,6 +9,15 @@ Status: approved · Related: [testing.md](testing.md)
 - Branch names describe the change: `feat/…`, `fix/…`, `docs/…`, `chore/…`, `test/…`.
 - A PR that changes behaviour updates the matching doc in `docs/architecture/` in the same PR.
 
+### Enforcement for Claude Code
+
+`.claude/settings.json` registers a `PreToolUse` hook, [`.claude/hooks/protect-main.mjs`](../../.claude/hooks/protect-main.mjs), that runs before every shell command Claude Code executes. It blocks:
+
+- `commit`, `merge`, `rebase`, `cherry-pick`, `revert`, `am` and `push` while the current branch is `main`
+- any `push` that targets `main` (`git push origin main`, `HEAD:main`, …) from any branch
+
+Reading commands and `git pull` on `main` are allowed, so `main` can still be updated after a PR is merged. The hook only guards Claude Code; GitHub branch protection would be the equivalent for humans.
+
 ## npm scripts
 
 | Script | Does |
