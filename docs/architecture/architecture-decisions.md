@@ -115,4 +115,4 @@ Decisions deferred until implementation, tracked in [README.md](README.md#open-q
 
 1. ~~Whether attribution older than 30 days is still sent on registration when no newer params arrived.~~ Decided in Stage 5: **sent as-is**, following the spec literally (options: send it · drop it at registration · expire on app load).
 2. ~~Whether to add a "Sign out" control for re-testing the signed-out flow.~~ Decided in Stage 7: **Sign out in the header and a Reset demo button** in the Try it panel (options: sign out · reset demo · neither; both chosen).
-3. How the toast is implemented.
+3. ~~How the toast is implemented.~~ Decided in Stage 8: **MUI Snackbar with a small `useToast` helper** (options: Snackbar + helper · notistack · toast state in Redux).

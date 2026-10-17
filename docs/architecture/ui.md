@@ -67,4 +67,6 @@ In dark mode the accent is a lighter tint of the brand violet, because `#4222B0`
 - Icon-only buttons have labels ("Switch to light mode", "Open menu", "Close").
 - The logo is exposed as one image named "RealPlay".
 - Dialogs are labelled by their title.
+- Form errors are shown under their fields (`helperText`) and general errors in an `Alert` with `role="alert"`.
+- Known limit: while a modal is open, MUI marks the rest of the page `aria-hidden`, so a toast shown at the same time (for example the sign-up toast when returning to a promo link) is visible but not announced by screen readers.
 - Text colours chosen for readable contrast on both backgrounds.

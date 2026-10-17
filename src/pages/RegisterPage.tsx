@@ -3,17 +3,16 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router';
 import { useAppSelector } from '../app/hooks';
 import { selectCurrentUser } from '../features/auth';
+import { RegisterForm } from '../features/registration';
 import { BRAND_VIOLET } from '../shared/ui';
 
 const BENEFITS = ['Welcome bonus on sign-up', 'Invite friends and play together', 'Start playing in seconds'];
 
 // Split screen: brand panel + form card, stacked on phones.
-// The form is wired to the register mutation in Stage 8.
 export function RegisterPage() {
   const user = useAppSelector(selectCurrentUser);
 
@@ -80,13 +79,7 @@ export function RegisterPage() {
               <Typography color="text.secondary" sx={{ mt: 1, mb: 3 }}>
                 It takes about ten seconds.
               </Typography>
-              <Stack component="form" spacing={2} noValidate onSubmit={(event) => event.preventDefault()}>
-                <TextField label="Name" name="name" autoComplete="name" />
-                <TextField label="Email" name="email" type="email" autoComplete="email" />
-                <Button type="submit" variant="contained" size="large">
-                  Create account
-                </Button>
-              </Stack>
+              <RegisterForm />
             </>
           )}
         </Box>

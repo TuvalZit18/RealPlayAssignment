@@ -93,4 +93,4 @@ Decisions not yet made. Each is repeated in the doc it affects.
 
 1. ~~Should attribution older than 30 days still be sent on registration if no new params arrived?~~ **Decided: yes, sent as-is** ([attribution.md](attribution.md#decision-records-dont-expire-on-their-own)).
 2. ~~Should there be a "Sign out" control so reviewers can re-test the signed-out flow?~~ **Decided: Sign out in the header plus a Reset demo button** ([auth.md](auth.md#decision-sign-out-and-reset-demo)).
-3. How is the toast implemented: MUI `Snackbar` behind a small helper, or `notistack`? ([frontend.md](frontend.md))
+3. ~~How is the toast implemented: MUI `Snackbar` behind a small helper, or `notistack`?~~ **Decided: MUI Snackbar with a small `useToast` helper** ([frontend.md](frontend.md#toast)).
