@@ -24,7 +24,7 @@ These constraints explain most of the "why" in the other docs. The goal is a sma
 
 | Doc | Covers |
 | --- | --- |
-| [architecture-decisions.md](architecture-decisions.md) | The process followed and every architecture question answered |
+| [architecture-decisions.md](architecture-decisions.md) | The process followed, every question answered, the build stages and decisions made while building |
 | [frontend.md](frontend.md) | Stack, folder structure, state ownership, app bootstrap |
 | [ui.md](ui.md) | Brand, theme, dark/light mode, layouts, modal frame, accessibility |
 | [routing-and-modals.md](routing-and-modals.md) | Routes, URL-driven modal stack, `openModal` / `closeModal` |
@@ -82,15 +82,15 @@ sequenceDiagram
 | Success side effects | Inside the `useRegister` hook | [frontend.md](frontend.md) |
 | Failure handling | No automatic retry; keep attribution; show error | [api.md](api.md) |
 | Validation | `returnTo` same-origin only; attribution key allowlist and length cap | [security.md](security.md) |
-| Testing | Unit tests for rules, 1–2 integration tests with MSW | [testing.md](testing.md) |
+| Testing | Unit tests for the rules plus integration tests of the running app with MSW (124 tests) | [testing.md](testing.md) |
 | Delivery | npm scripts, README, GitHub Actions CI on every PR that touches code | [delivery.md](delivery.md) |
 
 Deliberately out of scope: backups, file storage, scaling, messaging, background jobs, caching beyond React Query defaults, observability tooling, environments and release strategy, networking. None of them apply to a local demo with a mocked backend.
 
-## Open questions
+## Questions left open during planning
 
-Decisions not yet made. Each is repeated in the doc it affects.
+All three were decided during implementation; see [architecture-decisions.md](architecture-decisions.md#decisions-made-during-implementation) for those and the other choices made while building.
 
-1. ~~Should attribution older than 30 days still be sent on registration if no new params arrived?~~ **Decided: yes, sent as-is** ([attribution.md](attribution.md#decision-records-dont-expire-on-their-own)).
-2. ~~Should there be a "Sign out" control so reviewers can re-test the signed-out flow?~~ **Decided: Sign out in the header plus a Reset demo button** ([auth.md](auth.md#decision-sign-out-and-reset-demo)).
-3. ~~How is the toast implemented: MUI `Snackbar` behind a small helper, or `notistack`?~~ **Decided: MUI Snackbar with a small `useToast` helper** ([frontend.md](frontend.md#toast)).
+1. Attribution older than 30 days with no newer params: **sent as-is** at registration ([attribution.md](attribution.md#decision-records-dont-expire-on-their-own)).
+2. Returning to a signed-out state: **Sign out in the header plus a Reset demo button** ([auth.md](auth.md#decision-sign-out-and-reset-demo)).
+3. Toast: **MUI Snackbar with a small `useToast` helper** ([frontend.md](frontend.md#toast)).

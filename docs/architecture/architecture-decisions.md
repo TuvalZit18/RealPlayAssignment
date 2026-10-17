@@ -12,7 +12,7 @@ This document records the process I followed before writing any application code
    - Every decision is presented with its real alternatives, their trade-offs for *this* project, and a recommendation. I approve, reject or override each one.
    - Categories that don't apply are skipped explicitly, with a reason, instead of being forced in.
 4. **Planned the workflow.** Before coding I set the git workflow and made these docs the source of truth (see [Workflow](#workflow) below).
-5. **Then started building**, against the specs in this folder.
+5. **Then started building**, in reviewed stages, against the specs in this folder (see [Step 7](#step-7-building-in-stages)).
 
 The tables below list every question exactly as it was asked, the options I was given, the skill's recommendation, and what I chose. Where I chose differently from the recommendation, the row is marked **Override**.
 
@@ -109,10 +109,36 @@ Decided before writing code:
 - **Docs are the source of truth.** A PR that changes behaviour updates the matching doc in this folder in the same PR.
 - **CI** checks every PR that touches code. PRs that change only docs, Markdown or other non-code files skip it (see [delivery.md](delivery.md#ci)).
 
-## Still open
+## Step 7: Building in stages
 
-Decisions deferred until implementation, tracked in [README.md](README.md#open-questions):
+I split the work into stages, one branch and one pull request each. After every stage the checks had to pass (typecheck, lint, tests, build), and I reviewed the result and the commit message before it was merged. The next stage only started after the previous one was merged.
 
-1. ~~Whether attribution older than 30 days is still sent on registration when no newer params arrived.~~ Decided in Stage 5: **sent as-is**, following the spec literally (options: send it · drop it at registration · expire on app load).
-2. ~~Whether to add a "Sign out" control for re-testing the signed-out flow.~~ Decided in Stage 7: **Sign out in the header and a Reset demo button** in the Try it panel (options: sign out · reset demo · neither; both chosen).
-3. ~~How the toast is implemented.~~ Decided in Stage 8: **MUI Snackbar with a small `useToast` helper** (options: Snackbar + helper · notistack · toast state in Redux).
+| # | Stage | Branch | What it delivered |
+| --- | --- | --- | --- |
+| 1 | Scaffold | `chore/scaffold` | Vite + React 18 + TypeScript, dependencies, ESLint, scripts, folder structure |
+| 2 | CI | `chore/ci` | GitHub Actions: typecheck, lint, test, build; skipped for docs-only changes |
+| 3 | App shell | `feat/app-shell` | Versioned storage, API client, MSW mock backend, routes, bootstrap |
+| 4 | UI foundation | `feat/ui-foundation` | Theme, brand logo, layouts, modal frame (after the [design questions](#step-6-stage-4-design-questions)) |
+| 5 | Attribution | `feat/attribution` | First-touch rules, capture outside React, Redux store with persistence and cross-tab sync |
+| 6 | Modals | `feat/modals` | URL-driven modal stack, `useModalStack`, the four modals |
+| 7 | Auth and redirect | `feat/auth-gates` | Session, `<ProtectedRoute>`, modal gate, `returnTo`, sign out, reset demo |
+| 8 | Registration | `feat/registration` | Form, `useRegister`, toast, end-to-end tests |
+| 9 | Final pass | `docs/final` | Docs brought in line with the code, final README |
+
+Two small tooling PRs went in alongside: a Claude Code hook that blocks commits and pushes to `main` (`chore/protect-main-hook`) and a fix for it (`fix/protect-main-hook`).
+
+## Decisions made during implementation
+
+The rule while building: if anything couldn't go to plan, stop and decide, rather than work around it silently. These came up:
+
+| Stage | What came up | Options | My choice |
+| --- | --- | --- | --- |
+| 1 | React Router's latest major (v8) requires React 19; the task requires React 18 | Pin React Router 7 · Upgrade to React 19 · React Router 6 | **Pin React Router 7** (same `createBrowserRouter` / `router.subscribe` APIs) |
+| 3 | MSW 3 offers a new Vite plugin with an experimental API | Classic `msw init` + `setupWorker` · Plugin, worker-only · Plugin with network API | **Classic setup** |
+| 3 | The Redux store would have no slices until Stage 5 | Move the store to Stage 5 · Bring slice skeletons forward · Empty store now | **Move the store to Stage 5** |
+| 4 | The protect-main hook blocked read-only commands like `git merge-base` | Fix in its own PR · Fix inside Stage 4 · Leave it | **Fix in its own PR** |
+| 4 | Icons: hand-drawn SVGs or MUI's icon package | `@mui/icons-material` · Inline SVGs | **`@mui/icons-material`**, imported per icon |
+| 4 | Vite warns the main bundle is over 500 kB (MUI) | Leave it · Split vendor chunks · Raise the limit | **Leave it**: normal for MUI, local demo |
+| 5 | Attribution older than 30 days with no newer params, at registration | Send it · Drop it at registration · Expire on app load | **Send it**, reading the spec literally |
+| 7 | How reviewers return to a signed-out state | Sign out · Reset demo · Neither | **Both Sign out and Reset demo** |
+| 8 | Toast implementation | MUI Snackbar + helper · notistack · Toast state in Redux | **MUI Snackbar + helper** |

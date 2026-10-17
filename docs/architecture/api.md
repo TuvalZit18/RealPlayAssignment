@@ -41,6 +41,8 @@ Attribution is nested rather than spread at the top level, so marketing data can
 | `409` | `{ "error": { "code": "EMAIL_TAKEN", "message": "…" } }` | Email already registered in this mock session |
 | `500` | `{ "error": { "code": "SERVER_ERROR", "message": "…" } }` | Simulated failure (see [backend.md](backend.md)) |
 
+If the request never reaches the server, the client raises `ApiError` with status `0` and code `NETWORK_ERROR` ("Could not reach the server…").
+
 ## Client code
 
 | File | Responsibility |
