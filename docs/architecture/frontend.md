@@ -57,7 +57,7 @@ src/
   shared/
     api/                  fetch wrapper, ApiError
     storage/              Versioned, failure-safe localStorage read/write
-    ui/                   Logo, ModalFrame, brand colour
+    ui/                   Logo, ModalFrame, ToastProvider / useToast, brand colour
   mocks/
     handlers.ts           MSW handlers (shared by browser and tests)
     browser.ts            setupWorker for dev
@@ -99,6 +99,12 @@ The order matters. Attribution must be captured before any component can redirec
 - **Flat `components/ hooks/ pages/` structure:** quicker to start, but mixes attribution, modal and auth logic.
 - **Tailwind:** would need extra libraries for accessible dialogs and toasts.
 
-## Open questions
+## Toast
 
-- Toast implementation: MUI `Snackbar` behind a small helper, or `notistack`.
+`shared/ui/ToastProvider.tsx` wraps MUI `Snackbar` + `Alert`; components call `useToast().showToast(message, severity)`. One toast at a time, bottom centre, auto-hides after 5 seconds. The provider sits above the routes, so the success toast survives the redirect after sign-up.
+
+Decided in Stage 8 (options: MUI Snackbar + helper · `notistack` · toast state in Redux). Redux was rejected because a toast is short-lived UI state that doesn't need to be global or persisted; `notistack` adds a dependency for a single toast.
+
+## Registration form
+
+`features/registration/RegisterForm.tsx` validates on submit with the same rules as the API (`validation.ts`), then re-validates as the user types. Server field errors (400) show under their inputs; any other error shows as one alert above the form. Fields and the button are disabled while the request is pending ("Creating account…").
