@@ -26,6 +26,7 @@ These constraints explain most of the "why" in the other docs. The goal is a sma
 | --- | --- |
 | [architecture-decisions.md](architecture-decisions.md) | The process followed and every architecture question answered |
 | [frontend.md](frontend.md) | Stack, folder structure, state ownership, app bootstrap |
+| [ui.md](ui.md) | Brand, theme, dark/light mode, layouts, modal frame, accessibility |
 | [routing-and-modals.md](routing-and-modals.md) | Routes, URL-driven modal stack, `openModal` / `closeModal` |
 | [attribution.md](attribution.md) | Capturing `utm_*`, `ref`, `gclid`, `fbclid`; first-touch and 30-day rules |
 | [auth.md](auth.md) | Mocked session, the two auth gates, redirect with `returnTo` |
@@ -77,6 +78,7 @@ sequenceDiagram
 | Client state | Redux Toolkit: `auth` and `attribution` slices | [frontend.md](frontend.md) |
 | Server state | React Query (`useMutation`) for the register call | [frontend.md](frontend.md) |
 | UI library | MUI | [frontend.md](frontend.md) |
+| Design | RealPlay brand violet, dark by default with a remembered toggle, Inter, split-screen register page | [ui.md](ui.md) |
 | Success side effects | Inside the `useRegister` hook | [frontend.md](frontend.md) |
 | Failure handling | No automatic retry; keep attribution; show error | [api.md](api.md) |
 | Validation | `returnTo` same-origin only; attribution key allowlist and length cap | [security.md](security.md) |

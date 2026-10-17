@@ -76,6 +76,29 @@ Choosing Redux Toolkit changed two decisions already approved, and the skill fla
 | Delivery tooling | npm scripts + README · Add GitHub Actions CI · Add static deploy | npm scripts + README | **Override: GitHub Actions CI**: typecheck, lint, test and build on every PR that touches code |
 | Observability, Environment & release, Networking | Skip · Discuss | Skip | **Skipped**: local demo, no environments, no network infra |
 
+## Step 6: Stage 4 design questions
+
+Asked before any UI was built, so the design was agreed up front. Result: [ui.md](ui.md).
+
+| Decision | Options | Recommended | My choice |
+| --- | --- | --- | --- |
+| Visual direction | Clean & modern · Bold & playful · Minimal / MUI default | Clean & modern | **Clean & modern** |
+| Accent colour | Deep indigo · Teal · Coral | Deep indigo | **Deep indigo**, later refined to RealPlay's brand violet `#4222B0` (below) |
+| Light / dark mode | Light only · Follow system · Light + manual toggle | Light only | **Override: dark by default, with a toggle to switch to light** |
+| Font | Inter · Roboto · System font stack | Inter | **Inter** |
+| Header | Top bar, nav right · Top bar, centred nav · Side navigation | Top bar, nav right | **Top bar, nav right** |
+| Register page | Centred card · Split screen · Plain full-width form | Centred card | **Override: split screen** |
+| Modals | Centred dialog, full-screen on phones · Centred everywhere · Bottom sheet on phones | Centred, full-screen on phones | **Centred, full-screen on phones** |
+| Home page | Hero + "Try it" panel · Hero only · Hero + Try it + debug panel | Hero + Try it | **Hero + Try it** |
+| Remember theme choice | localStorage · Reset each load | localStorage | **localStorage** |
+| Logo | Icon + wordmark · Wordmark only | Icon + wordmark | **Override: use RealPlay's own logo from realplayltd.com, adapted to our design** |
+| Register side panel | Static benefits · Benefits + context line · Illustration | Static benefits | **Static benefits** |
+| Shape and density | 12px comfortable · 8px compact · Pill buttons | 12px comfortable | **12px comfortable** |
+| ↳ Accent after seeing the brand | Brand `#4222B0` · Keep earlier indigo | Brand `#4222B0` | **Brand `#4222B0`** |
+| ↳ Wordmark font | Inter with wide spacing · Raleway for the logo only | Inter | **Inter** |
+| ↳ Wordmark text | REALPLAY · REALPLAY TECH · Monogram only | REALPLAY | **REALPLAY** |
+| Icons | `@mui/icons-material` · Hand-drawn inline SVGs | Not asked at first; raised by me | **`@mui/icons-material`**, imported per icon |
+
 ## Workflow
 
 Decided before writing code:
