@@ -53,7 +53,7 @@ These render the whole app with `renderRoute(url)` (wired exactly like `main.tsx
 | Area | File | Covers |
 | --- | --- | --- |
 | Redirect | `features/auth/authGates.test.tsx` | Signed-out modal link goes to `/register?returnTo=…`, attribution kept, no modal shown, `replace` used; `/account` protected; invalid modal param doesn't redirect |
-| Registration | `features/registration/registration.test.tsx` | Body includes attribution; session started; attribution cleared; toast; back at `/?promo=SUMMER25` with the promo modal open. Also: no attribution stored, unsafe `returnTo`, failure keeps attribution and isn't retried, 409, client validation |
+| Registration | `features/registration/registration.test.tsx` | Body includes attribution; session started; attribution cleared; toast; back at `/?promo=SUMMER25` with the promo modal open. Also: no attribution stored, unsafe `returnTo`, failure keeps attribution and isn't retried, 409, same email accepted again after Reset demo, client validation |
 | Modals | `features/modals/ModalRenderer.test.tsx` | Cold load, any page, invalid values, stacking order, closing one of several, Back/Forward, in-app links |
 | Attribution | `features/attribution/captureAttribution.test.tsx` | Capture from the landing URL, on in-app navigation, first touch kept, persisted |
 | Auth | `features/auth/authGates.test.tsx` | Header user menu, sign out (and that `registered` survives it), reset demo |
@@ -62,7 +62,7 @@ These render the whole app with `renderRoute(url)` (wired exactly like `main.tsx
 | Pages | `app/router.test.tsx` | Every route, header, Try it links, register form and "already registered" |
 | Mock API | `mocks/handlers.test.ts` | 201, 400 with fields, 409, 500 |
 
-Total: 124 tests in 18 files, all run in CI.
+Total: 125 tests in 18 files, all run in CI.
 
 ## Manual checks before submitting
 

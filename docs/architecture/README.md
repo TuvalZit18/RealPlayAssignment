@@ -82,7 +82,7 @@ sequenceDiagram
 | Success side effects | Inside the `useRegister` hook | [frontend.md](frontend.md) |
 | Failure handling | No automatic retry; keep attribution; show error | [api.md](api.md) |
 | Validation | `returnTo` same-origin only; attribution key allowlist and length cap | [security.md](security.md) |
-| Testing | Unit tests for the rules plus integration tests of the running app with MSW (124 tests) | [testing.md](testing.md) |
+| Testing | Unit tests for the rules plus integration tests of the running app with MSW (125 tests) | [testing.md](testing.md) |
 | Delivery | npm scripts, README, GitHub Actions CI on every PR that touches code | [delivery.md](delivery.md) |
 
 Deliberately out of scope: backups, file storage, scaling, messaging, background jobs, caching beyond React Query defaults, observability tooling, environments and release strategy, networking. None of them apply to a local demo with a mocked backend.

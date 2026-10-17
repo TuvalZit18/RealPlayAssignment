@@ -80,7 +80,7 @@ Helpers live in `features/auth/returnTo.ts`: `safeReturnTo`, `buildReturnTo`, `r
 
 ## Reset demo (reviewer helper)
 
-The "Try it" panel on the home page has a **Reset demo** button (`app/useResetDemo.ts`). It removes `rp.session` and `rp.attribution` (keeping `rp.theme`), resets both slices and goes to `/`. The visitor is brand new again, so first-touch capture and the signed-out redirects can be re-tested. Other tabs follow through the `storage` event.
+The "Try it" panel on the home page has a **Reset demo** button (`app/useResetDemo.ts`). It removes `rp.session` and `rp.attribution` (keeping `rp.theme`), resets both slices, fires a `realplay:demo-reset` window event (`shared/demoReset.ts`) and goes to `/`. The mock backend listens for that event and forgets its registered emails, so the same email can be registered again without a reload. The app never imports the mock. The visitor is brand new again, so first-touch capture and the signed-out redirects can be re-tested. Other tabs follow through the `storage` event.
 
 ## Alternatives considered
 
