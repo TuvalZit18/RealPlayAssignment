@@ -1,12 +1,17 @@
 import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderRoute } from '../../test/renderRoute';
+import { seedSession } from '../../test/session';
 
 // Lower modals in a stack are aria-hidden by MUI, so query with hidden: true
 // to see the whole stack.
 const allDialogs = () => screen.queryAllByRole('dialog', { hidden: true });
 
-describe('modals in the app', () => {
+// Modals only render for signed-in users; the signed-out gate is tested in
+// features/auth.
+describe('modals in the app (signed in)', () => {
+  beforeEach(() => seedSession());
+
   it('opens a modal on cold load from the URL', () => {
     renderRoute('/?promo=SUMMER25');
     const dialog = screen.getByRole('dialog', { name: 'Promo unlocked' });

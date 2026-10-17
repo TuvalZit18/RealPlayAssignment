@@ -67,7 +67,7 @@ closeModal('promo');                                         // removes only ?pr
 - `parseModals(searchParams)` returns the ordered, validated list of open modals. It is a pure function and unit-tested.
 - `<ModalRenderer/>` maps that list to the modal components, each built on the shared `ModalFrame` (see [ui.md](ui.md#modals)).
 - **Stacking:** every open modal is rendered; later ones sit on top. Only the bottom modal dims the page (`hideBackdrop` on the rest), so a stack doesn't get darker with each modal. MUI marks lower modals `aria-hidden`, so assistive tech only sees the top one.
-- The renderer returns nothing for signed-out users. The modal gate (see [auth.md](auth.md)) redirects them before they would see anything.
+- `AppLayout` mounts the renderer only for signed-in users. For signed-out users the modal gate (see [auth.md](auth.md)) redirects before they would see anything.
 
 | Modal | Title | Content | Action |
 | --- | --- | --- | --- |

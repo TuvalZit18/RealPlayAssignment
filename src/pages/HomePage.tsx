@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router';
+import { useResetDemo } from '../app/useResetDemo';
 
 // Ready-made URLs so reviewers can exercise every requirement in one click.
 // "Open" navigates inside the app; the icon opens a new tab (a cold load).
@@ -23,6 +24,8 @@ const TRY_IT_LINKS = [
 ] as const;
 
 export function HomePage() {
+  const resetDemo = useResetDemo();
+
   return (
     <Stack spacing={{ xs: 6, md: 8 }}>
       <Box component="section" sx={{ maxWidth: 640 }}>
@@ -89,6 +92,15 @@ export function HomePage() {
               </Tooltip>
             </Box>
           ))}
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', pt: 2, borderTop: 1, borderColor: 'divider' }}>
+          <Button variant="outlined" onClick={resetDemo}>
+            Reset demo
+          </Button>
+          <Typography variant="body2" color="text.secondary">
+            Forgets your session and stored attribution, so you are a brand-new visitor again.
+          </Typography>
         </Box>
       </Card>
     </Stack>

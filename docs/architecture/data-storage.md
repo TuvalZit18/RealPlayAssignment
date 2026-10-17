@@ -26,7 +26,9 @@ Slices stay pure. A listener middleware in `app/store.ts` watches the persisting
 | Actions | Writes |
 | --- | --- |
 | `attributionCaptured`, `attributionCleared` | `rp.attribution` |
-| `sessionStarted` | `rp.session` |
+| `sessionStarted`, `sessionEnded` | `rp.session` |
+
+**Reset demo** (see [auth.md](auth.md#reset-demo-reviewer-helper)) removes `rp.session` and `rp.attribution` directly and keeps `rp.theme`.
 
 `*Hydrated` actions never trigger a write, which prevents an echo loop between tabs.
 

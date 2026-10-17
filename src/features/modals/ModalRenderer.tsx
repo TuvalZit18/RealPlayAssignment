@@ -12,7 +12,7 @@ const MODAL_COMPONENTS: { [K in ModalType]: ComponentType<ModalProps<K>> } = {
 
 // The single global modal renderer, mounted once in AppLayout. Renders every
 // open modal from the URL in order; later ones sit on top and only the bottom
-// one dims the page. Signed-out gating is added in Stage 7.
+// one dims the page. AppLayout renders it for signed-in users only.
 export function ModalRenderer() {
   const { modals, closeModal } = useModalStack();
 

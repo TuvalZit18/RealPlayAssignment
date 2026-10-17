@@ -1,7 +1,7 @@
 import { EXACT_KEYS, MAX_KEYS, MAX_VALUE_LENGTH, UTM_PREFIX } from './constants';
 import type { AttributionParams } from './types';
 
-function isAttributionKey(key: string): boolean {
+export function isAttributionKey(key: string): boolean {
   return EXACT_KEYS.has(key) || (key.startsWith(UTM_PREFIX) && key.length > UTM_PREFIX.length);
 }
 

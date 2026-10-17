@@ -5,6 +5,9 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router';
+import { useAppSelector } from '../app/hooks';
+import { selectCurrentUser } from '../features/auth';
 import { BRAND_VIOLET } from '../shared/ui';
 
 const BENEFITS = ['Welcome bonus on sign-up', 'Invite friends and play together', 'Start playing in seconds'];
@@ -12,6 +15,8 @@ const BENEFITS = ['Welcome bonus on sign-up', 'Invite friends and play together'
 // Split screen: brand panel + form card, stacked on phones.
 // The form is wired to the register mutation in Stage 8.
 export function RegisterPage() {
+  const user = useAppSelector(selectCurrentUser);
+
   return (
     <Box
       sx={{
@@ -50,19 +55,40 @@ export function RegisterPage() {
 
       <Card variant="elevation" elevation={0} square sx={{ p: { xs: 4, md: 6 }, display: 'flex', alignItems: 'center' }}>
         <Box sx={{ width: '100%', maxWidth: 400, mx: 'auto' }}>
-          <Typography variant="h3" component="h1">
-            Create your account
-          </Typography>
-          <Typography color="text.secondary" sx={{ mt: 1, mb: 3 }}>
-            It takes about ten seconds.
-          </Typography>
-          <Stack component="form" spacing={2} noValidate onSubmit={(event) => event.preventDefault()}>
-            <TextField label="Name" name="name" autoComplete="name" />
-            <TextField label="Email" name="email" type="email" autoComplete="email" />
-            <Button type="submit" variant="contained" size="large">
-              Create account
-            </Button>
-          </Stack>
+          {user ? (
+            <>
+              <Typography variant="h3" component="h1">
+                You're already registered
+              </Typography>
+              <Typography color="text.secondary" sx={{ mt: 1, mb: 3 }}>
+                Signed in as {user.name}.
+              </Typography>
+              <Stack direction="row" spacing={1.5}>
+                <Button component={RouterLink} to="/account" variant="contained">
+                  Go to your account
+                </Button>
+                <Button component={RouterLink} to="/" color="inherit">
+                  Home
+                </Button>
+              </Stack>
+            </>
+          ) : (
+            <>
+              <Typography variant="h3" component="h1">
+                Create your account
+              </Typography>
+              <Typography color="text.secondary" sx={{ mt: 1, mb: 3 }}>
+                It takes about ten seconds.
+              </Typography>
+              <Stack component="form" spacing={2} noValidate onSubmit={(event) => event.preventDefault()}>
+                <TextField label="Name" name="name" autoComplete="name" />
+                <TextField label="Email" name="email" type="email" autoComplete="email" />
+                <Button type="submit" variant="contained" size="large">
+                  Create account
+                </Button>
+              </Stack>
+            </>
+          )}
         </Box>
       </Card>
     </Box>
