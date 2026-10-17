@@ -48,12 +48,30 @@ Tests are written after the code they cover. Each test starts from a fresh store
 
 ## Integration cases
 
-1. **Signed-out redirect keeps the destination and attribution.** Start at `/?promo=SUMMER25&utm_source=google`. Expect the register page, `returnTo=/?promo=SUMMER25`, and the stored attribution record.
-2. **Registration sends attribution and returns.** From case 1, submit the form. Expect the request body to include `attribution.utm_source = "google"`, a success toast, attribution cleared, and the promo modal visible on `/`.
+These render the whole app with `renderRoute(url)` (wired exactly like `main.tsx`) and talk to the MSW mock. The two cases planned originally are the first two rows; the rest were added as each stage was built.
+
+| Area | File | Covers |
+| --- | --- | --- |
+| Redirect | `features/auth/authGates.test.tsx` | Signed-out modal link goes to `/register?returnTo=…`, attribution kept, no modal shown, `replace` used; `/account` protected; invalid modal param doesn't redirect |
+| Registration | `features/registration/registration.test.tsx` | Body includes attribution; session started; attribution cleared; toast; back at `/?promo=SUMMER25` with the promo modal open. Also: no attribution stored, unsafe `returnTo`, failure keeps attribution and isn't retried, 409, client validation |
+| Modals | `features/modals/ModalRenderer.test.tsx` | Cold load, any page, invalid values, stacking order, closing one of several, Back/Forward, in-app links |
+| Attribution | `features/attribution/captureAttribution.test.tsx` | Capture from the landing URL, on in-app navigation, first touch kept, persisted |
+| Auth | `features/auth/authGates.test.tsx` | Header user menu, sign out (and that `registered` survives it), reset demo |
+| Store | `app/store.test.ts` | Persistence for both slices, no write when nothing changed, cross-tab sync |
+| Theme | `app/theme/ThemeModeProvider.test.tsx` | Dark by default, toggle, remembered, invalid value |
+| Pages | `app/router.test.tsx` | Every route, header, Try it links, register form and "already registered" |
+| Mock API | `mocks/handlers.test.ts` | 201, 400 with fields, 409, 500 |
+
+Total: 124 tests in 18 files, all run in CI.
 
 ## Manual checks before submitting
 
+Things jsdom can't show, to check in a real browser with `npm run dev`:
+
+- The service worker intercepts `POST /api/register` (visible in DevTools → Network, with the attribution in the body).
 - Back/forward reopens and closes modals.
 - Closing one of two stacked modals leaves the other open.
 - Registering in one tab signs in a second open tab.
 - `fail@example.com` shows an error and keeps attribution.
+- Dark/light toggle looks right in both modes and is remembered after a reload.
+- At phone width (under 600px): header menu, stacked register page, full-screen modals.

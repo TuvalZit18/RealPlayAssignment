@@ -37,7 +37,8 @@ src/
     main.tsx              Bootstrap (see below)
     store.ts              configureStore, listener middleware, cross-tab sync
     hooks.ts              Typed useAppDispatch / useAppSelector
-    router.tsx            createBrowserRouter, route tree
+    router.tsx            Route tree (used by the browser router in main.tsx and memory routers in tests)
+    App.tsx               Providers + <RouterProvider>
     providers.tsx         Redux, React Query, MUI theme, toast
     AppLayout.tsx         <Outlet/>, modal gate, <ModalRenderer/> (signed in only)
     AppHeader.tsx         Logo, nav, theme toggle, Sign up or user menu with Sign out
@@ -63,7 +64,9 @@ src/
     browser.ts            setupWorker for dev
     server.ts             setupServer for Vitest
   test/
-    setup.ts
+    setup.ts              MSW server, per-test reset of mocks and localStorage
+    renderRoute.tsx       Renders the full app at a URL, wired like main.tsx
+    session.ts            seedSession() to start a test signed in
 ```
 
 Pages compose features and hold no business logic.
@@ -92,13 +95,6 @@ The order matters. Attribution must be captured before any component can redirec
   4. `navigate(returnTo, { replace: true })`, where `returnTo` is validated (see [auth.md](auth.md))
 - **On error:** no retry. Attribution is kept. The form shows the error message.
 
-## Alternatives considered
-
-- **React Context for auth** instead of Redux: less code; rejected in favour of RTK to demonstrate slices and listener middleware.
-- **Mirroring modals in Redux:** rejected; two sources of truth break back/forward.
-- **Flat `components/ hooks/ pages/` structure:** quicker to start, but mixes attribution, modal and auth logic.
-- **Tailwind:** would need extra libraries for accessible dialogs and toasts.
-
 ## Toast
 
 `shared/ui/ToastProvider.tsx` wraps MUI `Snackbar` + `Alert`; components call `useToast().showToast(message, severity)`. One toast at a time, bottom centre, auto-hides after 5 seconds. The provider sits above the routes, so the success toast survives the redirect after sign-up.
@@ -108,3 +104,10 @@ Decided in Stage 8 (options: MUI Snackbar + helper · `notistack` · toast state
 ## Registration form
 
 `features/registration/RegisterForm.tsx` validates on submit with the same rules as the API (`validation.ts`), then re-validates as the user types. Server field errors (400) show under their inputs; any other error shows as one alert above the form. Fields and the button are disabled while the request is pending ("Creating account…").
+
+## Alternatives considered
+
+- **React Context for auth** instead of Redux: less code; rejected in favour of RTK to demonstrate slices and listener middleware.
+- **Mirroring modals in Redux:** rejected; two sources of truth break back/forward.
+- **Flat `components/ hooks/ pages/` structure:** quicker to start, but mixes attribution, modal and auth logic.
+- **Tailwind:** would need extra libraries for accessible dialogs and toasts.
