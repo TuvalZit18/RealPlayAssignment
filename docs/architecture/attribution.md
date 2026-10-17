@@ -73,6 +73,8 @@ Extracting params from a URL (`extractAttributionParams(search)`) is a separate 
 | 33 | Registers | Body includes `{ utm_source: "newsletter" }`, then cleared |
 | 40 | `/?utm_source=google` | Ignored, user is registered |
 
-## Open questions
+## Decision: records don't expire on their own
 
-- A record older than 30 days with no newer params is still sent on registration. The task only says to overwrite after 30 days, not to expire. Keep this literal reading, or drop expired records when registering?
+A record older than 30 days with no newer params **is still sent** on registration. The task only says to overwrite after 30 days when new params arrive; it never says records expire, so we follow it literally and add no rule of our own (decided in Stage 5).
+
+Alternative considered: treat 30 days as a lookback window and drop the record at sign-up (common ad-platform practice). Rejected because the task doesn't ask for it.
