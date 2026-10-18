@@ -11,7 +11,7 @@ Requires Node 24 (see `.nvmrc`).
 ```bash
 npm ci          # install exact dependency versions
 npm run dev     # start the app at http://localhost:5173
-npm test        # run the test suite once (125 tests)
+npm test        # run the test suite once (127 tests)
 ```
 
 There is no backend: the API is mocked in the browser with [MSW](https://mswjs.io/), so `npm run dev` is all you need.
@@ -30,6 +30,7 @@ A full run through the flow:
 
 Useful extras:
 
+- **Age first touch by 30 days** (in the Try it panel) simulates 30 days passing since the stored ad click. Click it after step 1, then click the Facebook ad link: this time Facebook replaces Google and the clock resets.
 - Register with **`fail@example.com`** to see the error path (attribution is kept for the next attempt).
 - **Sign out** from the user menu in the header, or **Reset demo** in the Try it panel to become a brand-new visitor again.
 - The theme toggle in the header switches between dark (default) and light.
@@ -71,7 +72,7 @@ Full layout and state ownership: [frontend.md](docs/architecture/frontend.md).
 
 ## Tests
 
-125 tests across 18 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
+127 tests across 19 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
 
 ## How I worked
 

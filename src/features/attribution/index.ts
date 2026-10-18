@@ -10,5 +10,5 @@ export {
 export { loadAttributionState, saveAttributionState } from './attributionStorage';
 export { captureAttribution, captureOnNavigation } from './captureAttribution';
 export { extractAttributionParams, isAttributionKey } from './extractAttributionParams';
-export { STORAGE_KEY as ATTRIBUTION_STORAGE_KEY } from './constants';
+export { STORAGE_KEY as ATTRIBUTION_STORAGE_KEY, FIRST_TOUCH_WINDOW_MS } from './constants';
 export type { AttributionParams, AttributionRecord, AttributionState } from './types';

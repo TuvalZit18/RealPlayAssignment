@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router';
+import { useAgeFirstTouch } from '../app/useAgeFirstTouch';
 import { useResetDemo } from '../app/useResetDemo';
 
 // Ready-made URLs so reviewers can exercise every requirement in one click.
@@ -25,6 +26,7 @@ const TRY_IT_LINKS = [
 
 export function HomePage() {
   const resetDemo = useResetDemo();
+  const { ageFirstTouch, canAge } = useAgeFirstTouch();
 
   return (
     <Stack spacing={{ xs: 6, md: 8 }}>
@@ -94,14 +96,24 @@ export function HomePage() {
           ))}
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', pt: 2, borderTop: 1, borderColor: 'divider' }}>
-          <Button variant="outlined" onClick={resetDemo}>
-            Reset demo
-          </Button>
-          <Typography variant="body2" color="text.secondary">
-            Forgets your session and stored attribution, so you are a brand-new visitor again.
-          </Typography>
-        </Box>
+        <Stack spacing={1.5} sx={{ pt: 2, borderTop: 1, borderColor: 'divider' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+            <Button variant="outlined" onClick={ageFirstTouch} disabled={!canAge}>
+              Age first touch by 30 days
+            </Button>
+            <Typography variant="body2" color="text.secondary">
+              Simulates 30 days passing since the stored ad click, so the next ad link replaces it.
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+            <Button variant="outlined" onClick={resetDemo}>
+              Reset demo
+            </Button>
+            <Typography variant="body2" color="text.secondary">
+              Forgets your session and stored attribution, so you are a brand-new visitor again.
+            </Typography>
+          </Box>
+        </Stack>
       </Card>
     </Stack>
   );
