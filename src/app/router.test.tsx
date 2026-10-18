@@ -29,6 +29,19 @@ describe('routes', () => {
     expect(within(header).getByRole('link', { name: 'Sign up' })).toHaveAttribute('href', '/register');
   });
 
+  it('renders the footer with author and contact links on every page', () => {
+    renderRoute('/register');
+    const footer = screen.getByRole('contentinfo');
+    expect(footer).toHaveTextContent('Built by Tuval Zitelbach for RealPlay');
+    expect(within(footer).getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/tuval-zitelbach/',
+    );
+    const github = within(footer).getByRole('link', { name: 'GitHub' });
+    expect(github).toHaveAttribute('href', 'https://github.com/TuvalZit18');
+    expect(github).toHaveAttribute('target', '_blank');
+  });
+
   it('lists ready-made test links on the home page', () => {
     renderRoute('/');
     expect(screen.getByRole('link', { name: 'Promo modal' })).toHaveAttribute('href', '/?promo=SUMMER25');

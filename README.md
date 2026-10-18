@@ -11,7 +11,7 @@ Requires Node 24 (see `.nvmrc`).
 ```bash
 npm ci          # install exact dependency versions
 npm run dev     # start the app at http://localhost:5173
-npm test        # run the test suite once (133 tests)
+npm test        # run the test suite once (134 tests)
 ```
 
 There is no backend: the API is mocked in the browser with [MSW](https://mswjs.io/), so `npm run dev` is all you need.
@@ -72,7 +72,7 @@ Full layout and state ownership: [frontend.md](docs/architecture/frontend.md).
 
 ## Tests
 
-133 tests across 20 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
+134 tests across 20 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
 
 ## How I worked
 

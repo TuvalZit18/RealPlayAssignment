@@ -42,6 +42,7 @@ src/
     providers.tsx         Redux, React Query, MUI theme, toast
     AppLayout.tsx         <Outlet/>, modal gate, <ModalRenderer/> (signed in only)
     AppHeader.tsx         Logo, nav, theme toggle, Sign up or user menu with Sign out
+    AppFooter.tsx         Author name, LinkedIn and GitHub links
     useResetDemo.ts       Reviewer helper: forget session and attribution
     useAgeFirstTouch.ts   Reviewer helper: move the stored first touch 30 days back
     ThemeToggle.tsx       Dark/light switch in the header
