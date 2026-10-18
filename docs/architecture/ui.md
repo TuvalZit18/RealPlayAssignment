@@ -52,7 +52,7 @@ In dark mode the accent is a lighter tint of the brand violet, because `#4222B0`
 | --- | --- |
 | Header | Sticky top bar. Logo left; Home and Account links, theme toggle and "Sign up" right. When signed in, "Sign up" becomes the user's initial and name with a menu (Account, Sign out). Under 600px the links and Sign up / Sign out move into a menu (☰); the toggle stays visible |
 | Content | Centred container, max width `lg` |
-| Home | Hero (overline, "Play for real.", one line of copy, Sign up button) and a **Try it** card listing ready-made URLs for every requirement. Each has an in-app link and a "new tab" button for testing a cold load |
+| Home | Hero (overline, "Play for real.", one line of copy, Sign up button) and a **Try it** card listing ready-made URLs for every requirement. Each has an in-app link and a "new tab" button for testing a cold load. Below the links, two reviewer tools: "Age first touch by 30 days" and "Reset demo" |
 | Register | Split screen: violet gradient panel ("Join RealPlay." and three benefits) beside the form card. Stacks on phones |
 | Account | Single card with the user's name and email |
 | Not found | Centred message with a link home |

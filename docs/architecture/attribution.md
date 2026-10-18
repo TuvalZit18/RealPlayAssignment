@@ -73,6 +73,15 @@ Extracting params from a URL (`extractAttributionParams(search)`) is a separate 
 | 33 | Registers | Body includes `{ utm_source: "newsletter" }`, then cleared |
 | 40 | `/?utm_source=google` | Ignored, user is registered |
 
+## Trying the 30-day rule in the browser
+
+Waiting 30 days isn't practical, so the "Try it" panel on the home page has an **Age first touch by 30 days** button (`app/useAgeFirstTouch.ts`). It moves the stored `firstTouchAt` back by exactly 30 days, saves it to `localStorage` and shows a toast. The next ad link then replaces the record and resets the clock. The rules themselves are unchanged; only the stored timestamp moves. The button is disabled when nothing is stored.
+
+1. Click "Arrive from a Google ad": Google is saved.
+2. Click "Arrive from a Facebook ad": ignored, the first touch is less than 30 days old.
+3. Click "Age first touch by 30 days".
+4. Click "Arrive from a Facebook ad" again: Facebook replaces Google.
+
 ## Decision: records don't expire on their own
 
 A record older than 30 days with no newer params **is still sent** on registration. The task only says to overwrite after 30 days when new params arrive; it never says records expire, so we follow it literally and add no rule of our own (decided in Stage 5).
