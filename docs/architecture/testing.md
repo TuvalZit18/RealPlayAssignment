@@ -57,13 +57,14 @@ These render the whole app with `renderRoute(url)` (wired exactly like `main.tsx
 | Modals | `features/modals/ModalRenderer.test.tsx` | Cold load, any page, invalid values, stacking order, closing one of several, Back/Forward, in-app links |
 | Attribution | `features/attribution/captureAttribution.test.tsx` | Capture from the landing URL, on in-app navigation, first touch kept, persisted |
 | Auth | `features/auth/authGates.test.tsx` | Header user menu, sign out (and that `registered` survives it), reset demo |
+| Try it panel | `pages/TryItPanel.test.tsx` | Info button on every link; hover tooltip with signed-in and signed-out lines; status strip for signed out, after an ad click, after aging, signed in and registered |
 | 30-day helper | `app/useAgeFirstTouch.test.tsx` | Disabled with nothing stored; after aging, the next ad replaces the first touch and the clock resets |
 | Store | `app/store.test.ts` | Persistence for both slices, no write when nothing changed, cross-tab sync |
 | Theme | `app/theme/ThemeModeProvider.test.tsx` | Dark by default, toggle, remembered, invalid value |
 | Pages | `app/router.test.tsx` | Every route, header, Try it links, register form and "already registered" |
 | Mock API | `mocks/handlers.test.ts` | 201, 400 with fields, 409, 500 |
 
-Total: 127 tests in 19 files, all run in CI.
+Total: 133 tests in 20 files, all run in CI.
 
 ## Manual checks before submitting
 

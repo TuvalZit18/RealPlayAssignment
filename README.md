@@ -11,14 +11,14 @@ Requires Node 24 (see `.nvmrc`).
 ```bash
 npm ci          # install exact dependency versions
 npm run dev     # start the app at http://localhost:5173
-npm test        # run the test suite once (127 tests)
+npm test        # run the test suite once (133 tests)
 ```
 
 There is no backend: the API is mocked in the browser with [MSW](https://mswjs.io/), so `npm run dev` is all you need.
 
 ## Try it
 
-The home page has a **Try it** panel with a link for every requirement. Each link works in the app, and its ↗ icon opens it in a new tab (a cold load, like arriving from an ad).
+The home page has a **Try it** panel with a link for every requirement. Each link works in the app, and its ↗ icon opens it in a new tab (a cold load, like arriving from an ad). Hover the **ⓘ** next to a link to see what should happen, with one line for signed-in and one for signed-out visitors. A status strip at the top of the panel shows whether you're signed in and which first touch is stored (source and age), so you can check results without DevTools.
 
 A full run through the flow:
 
@@ -72,7 +72,7 @@ Full layout and state ownership: [frontend.md](docs/architecture/frontend.md).
 
 ## Tests
 
-127 tests across 19 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
+133 tests across 20 files. Unit tests cover the attribution rules, param extraction, modal parsing, `returnTo` safety and storage. Integration tests render the whole app with the real store and the MSW mock and walk the full flow: redirect, register, attribution sent and cleared, return to the promo modal. CI runs typecheck, lint, tests and build on every pull request that touches code. See [testing.md](docs/architecture/testing.md).
 
 ## How I worked
 
