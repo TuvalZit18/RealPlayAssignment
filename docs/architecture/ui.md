@@ -52,6 +52,7 @@ In dark mode the accent is a lighter tint of the brand violet, because `#4222B0`
 | --- | --- |
 | Header | Sticky top bar. Logo left; Home and Account links, theme toggle and "Sign up" right. When signed in, "Sign up" becomes the user's initial and name with a menu (Account, Sign out). Under 600px the links and Sign up / Sign out move into a menu (☰); the toggle stays visible |
 | Content | Centred container, max width `lg` |
+| Footer | On every page (`app/AppFooter.tsx`): "Built by Tuval Zitelbach for RealPlay" on the left, LinkedIn and GitHub links (icon + label, open in a new tab) on the right; stacks on phones |
 | Home | Hero (overline, "Play for real.", one line of copy, Sign up button) and a **Try it** card listing ready-made URLs for every requirement. Each row shows the link and its URL, an ⓘ button and a ↗ "new tab" button for testing a cold load. Hovering ⓘ (or focusing it, or tapping it on a phone) shows a tooltip with two lines: **Signed in:** and **Signed out:**, describing what should happen. Keeping the explanation in a tooltip keeps the list scannable and the URL visually distinct. A live status strip at the top shows whether you're signed in and the stored first touch (source and age), so results are visible without DevTools. Below the links, two reviewer tools: "Age first touch by 30 days" and "Reset demo". Lives in `pages/TryItPanel.tsx` |
 | Register | Split screen: violet gradient panel ("Join RealPlay." and three benefits) beside the form card. Stacks on phones |
 | Account | Single card with the user's name and email |

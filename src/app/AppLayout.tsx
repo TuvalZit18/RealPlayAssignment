@@ -3,10 +3,11 @@ import Container from '@mui/material/Container';
 import { Navigate, Outlet } from 'react-router';
 import { selectIsAuthenticated, useModalGateRedirect } from '../features/auth';
 import { ModalRenderer } from '../features/modals';
+import { AppFooter } from './AppFooter';
 import { AppHeader } from './AppHeader';
 import { useAppSelector } from './hooks';
 
-// Header, page outlet, the modal gate and the single global <ModalRenderer/>.
+// Header, page outlet, footer, the modal gate and the single global <ModalRenderer/>.
 // See docs/architecture/auth.md for the gate.
 export function AppLayout() {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -22,6 +23,8 @@ export function AppLayout() {
           {gateRedirect ? <Navigate replace to={gateRedirect} /> : <Outlet />}
         </Container>
       </Box>
+
+      <AppFooter />
 
       {isAuthenticated && <ModalRenderer />}
     </Box>

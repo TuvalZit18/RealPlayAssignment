@@ -61,10 +61,10 @@ These render the whole app with `renderRoute(url)` (wired exactly like `main.tsx
 | 30-day helper | `app/useAgeFirstTouch.test.tsx` | Disabled with nothing stored; after aging, the next ad replaces the first touch and the clock resets |
 | Store | `app/store.test.ts` | Persistence for both slices, no write when nothing changed, cross-tab sync |
 | Theme | `app/theme/ThemeModeProvider.test.tsx` | Dark by default, toggle, remembered, invalid value |
-| Pages | `app/router.test.tsx` | Every route, header, Try it links, register form and "already registered" |
+| Pages | `app/router.test.tsx` | Every route, header, footer, Try it links, register form and "already registered" |
 | Mock API | `mocks/handlers.test.ts` | 201, 400 with fields, 409, 500 |
 
-Total: 133 tests in 20 files, all run in CI.
+Total: 134 tests in 20 files, all run in CI.
 
 ## Manual checks before submitting
 
