@@ -53,6 +53,7 @@ src/
     registration/         <RegisterForm>, useRegister, register API call
   pages/
     HomePage.tsx
+    TryItPanel.tsx        Reviewer links with expected behaviour, live status, demo tools
     RegisterPage.tsx
     AccountPage.tsx
     NotFoundPage.tsx
